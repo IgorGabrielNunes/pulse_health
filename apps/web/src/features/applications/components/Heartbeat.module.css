@@ -1,0 +1,16 @@
+.track {
+  display: grid;
+  grid-template-columns: repeat(40, minmax(0, 1fr));
+  gap: 2px;
+  height: 1.75rem;
+}
+
+.bar {
+  border-radius: 2px;
+  background: var(--bar-color, var(--line));
+  transition: transform 120ms ease;
+}
+
+.bar[title]:hover {
+  transform: scaleY(1.15);
+}

@@ -1,0 +1,177 @@
+.row {
+  border-top: 1px solid var(--line);
+}
+
+.row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(10rem, 1fr) 6rem 5.5rem 1rem;
+  align-items: center;
+  gap: var(--space-6);
+  width: 100%;
+  padding: var(--space-4) var(--space-2);
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.summary:hover {
+  background: color-mix(in srgb, var(--ink) 3%, transparent);
+}
+
+.heartbeat {
+  min-width: 0;
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.names {
+  display: grid;
+  min-width: 0;
+}
+
+.name,
+.host {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.host {
+  color: var(--ink-muted);
+  font-size: var(--text-sm);
+}
+
+.metric {
+  display: grid;
+  justify-items: end;
+}
+
+.metricValue {
+  font-weight: 600;
+}
+
+.metricLabel {
+  color: var(--ink-faint);
+  font-size: var(--text-xs);
+}
+
+.chevron {
+  width: 1rem;
+  height: 1rem;
+  color: var(--ink-faint);
+  transition: transform 200ms var(--ease-out);
+}
+
+.row[data-expanded] .chevron {
+  transform: rotate(180deg);
+}
+
+.details:not([hidden]) {
+  animation: reveal 220ms var(--ease-out);
+}
+
+.detailsInner {
+  display: grid;
+  gap: var(--space-6);
+  padding: var(--space-2) var(--space-2) var(--space-6) calc(0.625rem + var(--space-3) + var(--space-2));
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--space-4) var(--space-8);
+  font-size: var(--text-sm);
+}
+
+.facts dt {
+  color: var(--ink-faint);
+}
+
+.facts dd {
+  overflow-wrap: anywhere;
+}
+
+.facts a {
+  color: inherit;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+
+.facts a:hover {
+  text-decoration-color: currentColor;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.error {
+  padding: var(--space-3) var(--space-4);
+  border-left: 2px solid var(--status-down);
+  background: color-mix(in srgb, var(--status-down) 8%, transparent);
+  font-size: var(--text-sm);
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .summary {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      'identity uptime latency'
+      'heartbeat heartbeat heartbeat';
+    gap: var(--space-3) var(--space-4);
+  }
+
+  .identity {
+    grid-area: identity;
+  }
+
+  .heartbeat {
+    grid-area: heartbeat;
+  }
+
+  .uptime {
+    grid-area: uptime;
+  }
+
+  .latency {
+    grid-area: latency;
+  }
+
+  .chevron {
+    display: none;
+  }
+
+  .detailsInner {
+    padding-left: var(--space-2);
+  }
+
+  .spacer {
+    display: none;
+  }
+}

@@ -1,0 +1,118 @@
+:root {
+  color-scheme: light dark;
+
+  --surface: #f6f7f9;
+  --surface-raised: #ffffff;
+  --ink: #1d2027;
+  --ink-muted: #5f6675;
+  --ink-faint: #9aa1ae;
+  --line: #e2e5eb;
+  --line-strong: #cdd2db;
+
+  --status-up: #1f9468;
+  --status-degraded: #b97e0a;
+  --status-down: #cf3f36;
+  --status-pending: #9aa1ae;
+  --status-paused: #c3c8d1;
+
+  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-display: clamp(2rem, 1.2rem + 3.6vw, 3.5rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  --content-width: 68rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #121418;
+    --surface-raised: #1a1d23;
+    --ink: #e8eaee;
+    --ink-muted: #9aa1ae;
+    --ink-faint: #646b78;
+    --line: #262a32;
+    --line-strong: #353a44;
+
+    --status-up: #33b07a;
+    --status-degraded: #d9a23a;
+    --status-down: #ec5d52;
+    --status-pending: #646b78;
+    --status-paused: #3c414b;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  font-feature-settings: 'tnum' 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

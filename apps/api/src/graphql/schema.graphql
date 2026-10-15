@@ -1,0 +1,95 @@
+scalar DateTime
+
+enum ServiceStatus {
+  PENDING
+  UP
+  DEGRADED
+  DOWN
+}
+
+enum HttpMethod {
+  GET
+  HEAD
+}
+
+enum UptimeWindow {
+  DAY
+  WEEK
+  MONTH
+}
+
+type HealthCheck {
+  id: ID!
+  status: ServiceStatus!
+  statusCode: Int
+  latencyMs: Int!
+  error: String
+  checkedAt: DateTime!
+}
+
+type Application {
+  id: ID!
+  name: String!
+  url: String!
+  method: HttpMethod!
+  expectedStatus: Int!
+  checkIntervalSeconds: Int!
+  timeoutMs: Int!
+  degradedThresholdMs: Int!
+  paused: Boolean!
+  status: ServiceStatus!
+  lastLatencyMs: Int
+  lastCheckedAt: DateTime
+  createdAt: DateTime!
+  """
+  Percentage of successful checks (UP or DEGRADED) within the window. Null when no checks exist.
+  """
+  uptime(window: UptimeWindow! = DAY): Float
+  """
+  Most recent checks, newest first.
+  """
+  recentChecks(limit: Int! = 30): [HealthCheck!]!
+}
+
+type StatusSummary {
+  total: Int!
+  up: Int!
+  degraded: Int!
+  down: Int!
+  pending: Int!
+  paused: Int!
+}
+
+type Query {
+  applications: [Application!]!
+  application(id: ID!): Application
+  statusSummary: StatusSummary!
+}
+
+input CreateApplicationInput {
+  name: String!
+  url: String!
+  method: HttpMethod = GET
+  expectedStatus: Int = 200
+  checkIntervalSeconds: Int = 60
+  timeoutMs: Int = 10000
+  degradedThresholdMs: Int = 1500
+}
+
+input UpdateApplicationInput {
+  name: String
+  url: String
+  method: HttpMethod
+  expectedStatus: Int
+  checkIntervalSeconds: Int
+  timeoutMs: Int
+  degradedThresholdMs: Int
+  paused: Boolean
+}
+
+type Mutation {
+  createApplication(input: CreateApplicationInput!): Application!
+  updateApplication(id: ID!, input: UpdateApplicationInput!): Application!
+  deleteApplication(id: ID!): ID!
+  checkApplication(id: ID!): Application!
+}

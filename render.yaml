@@ -1,0 +1,34 @@
+databases:
+  - name: pulse-db
+    databaseName: pulse
+    user: pulse
+    plan: free
+    region: oregon
+    postgresMajorVersion: "16"
+
+services:
+  - type: web
+    name: pulse-api
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm ci --include=dev -w @pulse/api && npm run build -w @pulse/api
+    startCommand: npm run start -w @pulse/api
+    healthCheckPath: /healthz
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - apps/api/**
+        - package-lock.json
+        - render.yaml
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pulse-db
+          property: connectionString
+      - key: CORS_ORIGINS
+        sync: false
